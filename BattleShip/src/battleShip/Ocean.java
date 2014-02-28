@@ -3,53 +3,57 @@ package battleShip;
 public interface Ocean {
 
 	/*
-	 * place all the ships randomly on the initially empty ocean.
-	 * Place larger ships before smaller ones to avoid "no legal move"
+	 * places all the ships randomly on the initially empty ocean.
+	 * places larger ships before smaller ones to avoid "no legal move"
 	 * Use Random class Java.util
+	 * @return returns void
 	 */
 	 void placeAllShipsRandomly();
 		
-	/*returns true if the given location contains a ship, false if not
-	 * 
+	/*
+	 * @return returns boolean, True if the given location contains a ship, False if not
+	 * @param the coordinate of the game grid as row and column id
 	 */
 	boolean isOccupied(int row, int column);
 	 
 	/*
-	 * returns True if given location contains a ship still afloat, false if it does not
-	 * returns True if several shot fired at the same location as long as the ship is afloat, false otherwise
-	 * update the number of shot fired
+	 * @return returns boolean, True if the given location contains a ship afloat, False if there is no ship or if the ship is sunk
+	 * @return it returns True if several shot are fired at the same location as long as the ship is afloat, returns False if the ship is sunk
+	 * updates the number of shot fired
+	 * @param the coordinate of the game grid as row and column id
+	 * @throws IllegalArgumentException if the coordinates are outside of the grid
 	*/
 	 boolean shootAt(int row, int coloumn);
 
 	/*
-	 * return the number of shot fired
+	 * @return returns int, the number of shot fired
 	 */
 	 int getShotsFired();
 	 
 	/*
-	 * returns the number of hit recorded (even several shot at the same place)
+	 * @return returns int, the number of hit recorded (even several shot at the same place)
 	 */
 	int getHitCount();
 	
 	/*
-	 * returns the number of ship sunk 
+	 * @return returns int, the number of ship sunk 
 	 */
 	int getShipsSunk();
 	
-	/*return true if all ships have been sunk
-	 * 
+	/*
+	 * @return returns true if all ships have been sunk
 	 */
 	boolean isGameOver();
 	
 	/*
-	 * returns the grid of ship 
+	 * @return returns Ship double Array as the grid of ship 
 	 */
 	Ship[][] getShipArray();
 	
 	/*
-	 * return the string representing the ocean
-	 * row number on the left from 0 to 9
-	 * column number on top from 0 to 9
+	 * @return returns string, representing the ocean
+	 * display the row number on the left from 0 to 9
+	 * display the column number on top from 0 to 9
 	 * S: hit on ship
 	 * -: hit on water
 	 * x: sunken ship
