@@ -13,8 +13,11 @@ public class OceanImpl implements Ocean {
 	public OceanImpl(){
 		//Create an empty ocean fills the ship  array with EmptySeas.
 		// Also initialises game variables such as how many shots have been fired.
-		this.setOcean();
-		
+		this.initOcean();
+		this.initShipArray();
+		shotFired = 0;
+		hitCount = 0;
+		shipSunk = 0;
 	}
 	
 	public void placeAllShipsRandomly(){
@@ -73,11 +76,19 @@ public class OceanImpl implements Ocean {
 		return ocean;
 	}
 	
-	private void setOcean(){
+	private void initOcean(){
 		oceanGrid = new String[9][9];
 		for(int i = 0; i<9;i++){
 			for (int j=0;j<10;j++)
 				oceanGrid[i][j]=".";
+		}
+	}
+	
+	private void initShipArray(){
+		Ship es = new EmptySeas();
+		for(int i = 0; i<9;i++){
+			for (int j=0;j<10;j++)
+				this.shipArray[i][j]= es;
 		}
 	}
 }
