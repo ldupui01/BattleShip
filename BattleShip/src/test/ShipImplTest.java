@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class BattleShipTest {
+public class ShipImplTest {
     static Ship testShipper;
     static int bowRow;
     static int colRow;

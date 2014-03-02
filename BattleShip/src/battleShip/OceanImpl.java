@@ -1,6 +1,13 @@
 package battleShip;
+/**
+ * @author Ludo
+ *
+ */
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 
 public class OceanImpl implements Ocean {
 	private Ship[][] shipArray;
@@ -9,6 +16,7 @@ public class OceanImpl implements Ocean {
 	private int shipSunk;
 	private String ocean;
 	private String[][] oceanGrid;
+	private List<Ship> fleet;
 
 	public OceanImpl(){
 		//Create an empty ocean fills the ship  array with EmptySeas.
@@ -18,12 +26,44 @@ public class OceanImpl implements Ocean {
 		shotFired = 0;
 		hitCount = 0;
 		shipSunk = 0;
+		fleet = new ArrayList<Ship>();
+		this.admiral();
+	}
+	
+	private void admiral(){
+		//Setting the fleet
+		// **************** would be better as a factory !!!!!!!!! ******************************
+		Ship carrier = new AircraftCarrier();
+		fleet.add(carrier);
+		Ship battleship1 = new Battleship();
+		fleet.add(battleship1);
+		Ship battleship2 = new Battleship();
+		fleet.add(battleship2);
+		Ship submarine1 = new Submarine();
+		fleet.add(submarine1);
+		Ship submarine2 = new Submarine();
+		fleet.add(submarine2);
+		Ship destroyer1 = new Destroyer();
+		fleet.add(destroyer1);
+		Ship destroyer2 = new Destroyer();
+		fleet.add(destroyer2);
+		Ship patrol1 = new PatrolBoat();
+		fleet.add(patrol1);
+		Ship patrol2 = new PatrolBoat();
+		fleet.add(patrol2);
+		Ship patrol3 = new PatrolBoat();
+		fleet.add(patrol3);
+		Ship patrol4 = new PatrolBoat();
+		fleet.add(patrol4);
 	}
 	
 	public void placeAllShipsRandomly(){
 		//place all the ships randomly on the initially empty ocean.
 		//Place larger ships before smaller ones to avoid "no legal move"
 		//Use Random class Java.util
+		
+		
+		
 	}
 	
 	public boolean isOccupied(int row, int column){
@@ -35,6 +75,9 @@ public class OceanImpl implements Ocean {
 		//returns True if given location contains a ship still afloat, false if it does not
 		//returns True if several shot fired at the same location as long as the ship is afloat, false otherwise
 		//update the number of shot fired
+		shotFired++;
+		
+		
 		return false;
 	}
 	
@@ -85,7 +128,7 @@ public class OceanImpl implements Ocean {
 	}
 	
 	private void initShipArray(){
-		Ship es = new EmptySeas();
+		Ship es = new EmptySea();
 		for(int i = 0; i<9;i++){
 			for (int j=0;j<10;j++)
 				this.shipArray[i][j]= es;

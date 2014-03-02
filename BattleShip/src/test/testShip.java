@@ -1,11 +1,11 @@
 package test;
 
-import battleShip.Battleship;
+import battleShip.ShipImpl;
 
 /**
  * Created by Fliss on 23/02/14.
  */
-public class testShip extends Battleship {
+public class testShip extends ShipImpl {
 
     public testShip() {
         hit = new boolean[2];

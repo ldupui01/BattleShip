@@ -3,14 +3,16 @@
  */
 package battleShip;
 
+import battleShip.Ship;
+
 /**
  * @author Guilherme
  *
  */
-public class Battleship extends ShipImpl implements Ship {
+public class Destroyer extends ShipImpl implements Ship {
 	
-	public Battleship(){
-		this.length = 4;
+	public Destroyer(){
+		this.length = 2;
 		this.hit = new int[length];
 	}
 

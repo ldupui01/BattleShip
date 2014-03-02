@@ -7,10 +7,10 @@ package battleShip;
  * @author Guilherme
  *
  */
-public class Battleship extends ShipImpl implements Ship {
+public class EmptySea extends ShipImpl implements Ship {
 	
-	public Battleship(){
-		this.length = 4;
+	public EmptySea(){
+		this.length = 1;
 		this.hit = new int[length];
 	}
 
@@ -31,5 +31,18 @@ public class Battleship extends ShipImpl implements Ship {
 		// TODO Auto-generated method stub
 		return this.getClass().getSimpleName();
 	}
-
+	
+	@Override
+	boolean shootAt(int row, int column) {
+		return false;
+	}
+	
+	@Override
+	boolean isSunk() {
+		return false;
+	}
+	@Override 
+	public String toString(){
+		return "-";
+	}
 }

@@ -7,10 +7,10 @@ package battleShip;
  * @author Guilherme
  *
  */
-public class Battleship extends ShipImpl implements Ship {
+public class AircraftCarrier extends ShipImpl implements Ship {
 	
-	public Battleship(){
-		this.length = 4;
+	public AircraftCarrier(){
+		this.length = 5;
 		this.hit = new int[length];
 	}
 
