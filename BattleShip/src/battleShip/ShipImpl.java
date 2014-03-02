@@ -12,9 +12,14 @@ public abstract class ShipImpl implements Ship {
     private int bowColumn;
     protected boolean[] hit;
 
-
+/*MISTAKE
     @Override
-    public abstract int getLength();
+    public abstract int getLength(); // Why that one is abstract ?????????????
+*/
+    @Override
+    public  int getLength(){
+    	return length; // Guilh solution
+    } 
 
     @Override
     public int getBowRow() {
@@ -51,9 +56,15 @@ public abstract class ShipImpl implements Ship {
     public void setHorizontal(boolean horizontal){
         this.isHorizontal = horizontal;
     }
-
+/* MISTAKE*****************
     @Override
-    public abstract String getShipType();
+    public abstract String getShipType(); // Why that one is abstract ?????????????
+*/  
+    @Override
+    public String getShipType(){
+    	return this.getClass().getSimpleName();  // Guilh solution
+    }
+
 
     @Override
     public boolean okToPlaceShipAt(int row, int column, boolean hori, Ocean ocean) {

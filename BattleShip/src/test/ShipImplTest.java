@@ -22,16 +22,13 @@ public class ShipImplTest {
     static boolean isHoriz;
     static Ocean testOcean;
 
-
     @BeforeClass
     public static void setUp() {
     testShipper = new testShip();
     bowRow = 2;
     colRow = 2;
     isHoriz = true;
-
     }
-
 
     @Test
     public void getBowRowTest() {
@@ -95,7 +92,7 @@ public class ShipImplTest {
     @Test
     public void isSunkTest() {
         testPatrolBoat.shootAt(0, 0);
-        assert true(testPatrolBoat.isSunk)
+        assert true(testPatrolBoat.isSunk);
     }
 
     @Test (expected = IllegalArgumentException.class)

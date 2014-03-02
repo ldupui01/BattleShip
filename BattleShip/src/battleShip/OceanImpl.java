@@ -61,7 +61,7 @@ public class OceanImpl implements Ocean {
 		fleet.add(patrol4);
 	}
 	
-	private static int randInt(int min, int max){
+	public int randInt(int min, int max){
 		// the max is excluded, but the min is included from the random generation 
 		// so call random form 0 to 10 to fill up the grid [0 - 9]
 		Random rand = new Random();
