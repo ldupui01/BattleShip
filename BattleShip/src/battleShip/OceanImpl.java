@@ -5,6 +5,7 @@ package battleShip;
  */
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ public class OceanImpl implements Ocean {
 	private String ocean;
 	private String[][] oceanGrid;
 	private List<Ship> fleet;
+	private int maxGrid;
 
 	public OceanImpl(){
 		//Create an empty ocean fills the ship  array with EmptySeas.
@@ -28,6 +30,8 @@ public class OceanImpl implements Ocean {
 		shipSunk = 0;
 		fleet = new ArrayList<Ship>();
 		this.admiral();
+		maxGrid = 10;
+		
 	}
 	
 	private void admiral(){
@@ -57,17 +61,40 @@ public class OceanImpl implements Ocean {
 		fleet.add(patrol4);
 	}
 	
+	private static int randInt(int min, int max){
+		// the max is excluded, but the min is included from the random generation 
+		// so call random form 0 to 10 to fill up the grid [0 - 9]
+		Random rand = new Random();
+		return rand.nextInt(max-min);
+	}
+	
 	public void placeAllShipsRandomly(){
 		//place all the ships randomly on the initially empty ocean.
 		//Place larger ships before smaller ones to avoid "no legal move"
 		//Use Random class Java.util
 		
-		
-		
+		Iterator<Ship> it = fleet.iterator();
+		while (it.hasNext()){
+		Ship obj = it.next();
+			boolean place = false;
+			boolean horiz = false;
+			int row = -1, column = -1; // initialised at -1 to make sure the random setting is working
+			while (!place){
+				row = randInt(0, maxGrid);
+				column = randInt(0, maxGrid);
+				horiz = (randInt(0,2)>0)? true:false;
+				place = obj.okToPlaceShipAt(row, column, horiz, this); //Can Ocean class refer to itself with the keyword this?
+			}
+			obj.setHorizontal(horiz);
+			obj.setBowColumn(column);
+			obj.setBowRow(row);
+		}	
 	}
 	
 	public boolean isOccupied(int row, int column){
 		//returns True if the given location contains a ship, false if not
+		
+		
 		return false;
 	}
 	
@@ -76,8 +103,6 @@ public class OceanImpl implements Ocean {
 		//returns True if several shot fired at the same location as long as the ship is afloat, false otherwise
 		//update the number of shot fired
 		shotFired++;
-		
-		
 		return false;
 	}
 	
@@ -120,17 +145,17 @@ public class OceanImpl implements Ocean {
 	}
 	
 	private void initOcean(){
-		oceanGrid = new String[9][9];
-		for(int i = 0; i<9;i++){
-			for (int j=0;j<10;j++)
+		oceanGrid = new String[maxGrid][maxGrid];
+		for(int i = 0; i<maxGrid;i++){
+			for (int j=0;j<maxGrid;j++)
 				oceanGrid[i][j]=".";
 		}
 	}
 	
 	private void initShipArray(){
 		Ship es = new EmptySea();
-		for(int i = 0; i<9;i++){
-			for (int j=0;j<10;j++)
+		for(int i = 0; i<maxGrid;i++){
+			for (int j=0;j<maxGrid;j++)
 				this.shipArray[i][j]= es;
 		}
 	}
