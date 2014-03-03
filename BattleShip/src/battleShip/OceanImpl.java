@@ -19,24 +19,25 @@ public class OceanImpl implements Ocean {
 	private String[][] oceanGrid;
 	private List<Ship> fleet;
 	private int maxGrid;
+	private int fleetInitSize;
 
 	public OceanImpl(){
 		//Create an empty ocean fills the ship  array with EmptySeas.
 		// Also initialises game variables such as how many shots have been fired.
+		maxGrid = 10;
 		this.initOcean();
 		this.initShipArray();
+		fleet = new ArrayList<Ship>();
+		this.admiral();
 		shotFired = 0;
 		hitCount = 0;
 		shipSunk = 0;
-		fleet = new ArrayList<Ship>();
-		this.admiral();
-		maxGrid = 10;
-		
+		fleetInitSize = fleet.size();
 	}
 	
 	private void admiral(){
 		//Setting the fleet
-		// **************** would be better as a factory !!!!!!!!! ******************************
+		// **************** WOULD BE BETTER AS A FACTORY !!!!!!!!! ******************************
 		Ship carrier = new AircraftCarrier();
 		fleet.add(carrier);
 		Ship battleship1 = new Battleship();
@@ -61,9 +62,9 @@ public class OceanImpl implements Ocean {
 		fleet.add(patrol4);
 	}
 	
-	public int randInt(int min, int max){
+	private int randInt(int min, int max){
 		// the max is excluded, but the min is included from the random generation 
-		// so call random form 0 to 10 to fill up the grid [0 - 9]
+		// i.e. call random from 0 to 10 to fill up a grid [0 - 9]
 		Random rand = new Random();
 		return rand.nextInt(max-min);
 	}
@@ -83,7 +84,7 @@ public class OceanImpl implements Ocean {
 				row = randInt(0, maxGrid);
 				column = randInt(0, maxGrid);
 				horiz = (randInt(0,2)>0)? true:false;
-				place = obj.okToPlaceShipAt(row, column, horiz, this); //Can Ocean class refer to itself with the keyword this?
+				place = obj.okToPlaceShipAt(row, column, horiz, this); //Can Ocean class refer to itself with the keyword this????
 			}
 			obj.setHorizontal(horiz);
 			obj.setBowColumn(column);
@@ -93,17 +94,21 @@ public class OceanImpl implements Ocean {
 	
 	public boolean isOccupied(int row, int column){
 		//returns True if the given location contains a ship, false if not
-		
-		
-		return false;
+		return(oceanGrid[row][column]=="S" || oceanGrid[row][column]=="x")?true:false;
 	}
 	
-	public boolean shootAt(int row, int coloumn){
+	public boolean shootAt(int row, int column){
 		//returns True if given location contains a ship still afloat, false if it does not
 		//returns True if several shot fired at the same location as long as the ship is afloat, false otherwise
 		//update the number of shot fired
 		shotFired++;
-		return false;
+		if(oceanGrid[row][column]=="S"){
+			hitCount++;
+			
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public int getShotsFired(){
@@ -118,12 +123,12 @@ public class OceanImpl implements Ocean {
 	
 	public int getShipsSunk(){
 		//returns the number of ship sunk;
+		shipSunk = fleetInitSize - fleet.size();
 		return shipSunk;
 	}
 	
 	public boolean isGameOver(){
-		//return true if all ships have been sunk
-		return false;
+		return (fleet.isEmpty())? true:false;
 	}
 	
 	public Ship[][] getShipArray(){
@@ -146,16 +151,16 @@ public class OceanImpl implements Ocean {
 	
 	private void initOcean(){
 		oceanGrid = new String[maxGrid][maxGrid];
-		for(int i = 0; i<maxGrid;i++){
-			for (int j=0;j<maxGrid;j++)
+		for(int i = 0; i<maxGrid-1;i++){
+			for (int j=0;j<maxGrid-1;j++)
 				oceanGrid[i][j]=".";
 		}
 	}
 	
 	private void initShipArray(){
 		Ship es = new EmptySea();
-		for(int i = 0; i<maxGrid;i++){
-			for (int j=0;j<maxGrid;j++)
+		for(int i = 0; i<maxGrid-1;i++){
+			for (int j=0;j<maxGrid-1;j++)
 				this.shipArray[i][j]= es;
 		}
 	}

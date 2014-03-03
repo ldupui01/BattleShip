@@ -3,8 +3,6 @@ package battleShip;
 //import Ocean;
 //import Ship;
 
-
-
 public abstract class ShipImpl implements Ship {
     private boolean isHorizontal;
     protected int length;
