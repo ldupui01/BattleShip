@@ -171,15 +171,22 @@ public class OceanImpl implements Ocean {
 	}
 	
 	private Ship identifyShip(int row, int column){
-		Ship s;
-		boolean check = false;
 		Iterator<Ship> it = fleet.iterator();
 		while (it.hasNext()){
 			Ship obj = it.next(); 
-			
-			s = obj;
-		}	
-		return s;
-		
+			for(int i = 0; i<obj.getLength();i++){
+				if (obj.isHorizontal()){
+					if (obj.getBowRow() == row && obj.getBowColumn()+i == column){
+						return obj;
+					}
+				}else{
+					if (obj.getBowRow()+i == row && obj.getBowColumn() == column){
+						return obj;
+					}
+				}
+			}
+		}
+		Ship es= new EmptySea();
+		return es;
 	}
 }
