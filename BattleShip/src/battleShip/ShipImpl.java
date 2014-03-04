@@ -1,7 +1,7 @@
 package battleShip;
 
-//import Ocean;
-//import Ship;
+import battleShip.Ocean;
+import battleShip.Ship;
 
 public abstract class ShipImpl implements Ship {
     private boolean isHorizontal;

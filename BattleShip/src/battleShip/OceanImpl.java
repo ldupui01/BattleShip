@@ -11,7 +11,7 @@ import java.util.Random;
 
 
 public class OceanImpl implements Ocean {
-	private Ship[][] shipArray;
+	private Ship[][] shipArray; //TODO maybe a static field could make it safer !
 	private int shotFired;
 	private int hitCount;
 	private int shipSunk;
@@ -37,7 +37,7 @@ public class OceanImpl implements Ocean {
 	
 	private void admiral(){
 		//Setting the fleet
-		// **************** WOULD BE BETTER AS A FACTORY !!!!!!!!! ******************************
+		//TODO **************** TO be set as FACTORY ******************************
 		Ship carrier = new AircraftCarrier();
 		fleet.add(carrier);
 		Ship battleship1 = new Battleship();
@@ -76,7 +76,7 @@ public class OceanImpl implements Ocean {
 		
 		Iterator<Ship> it = fleet.iterator();
 		while (it.hasNext()){
-		Ship obj = it.next();
+		Ship obj = it.next(); //TODO test the iterator is actually starting with the big boat
 			boolean place = false;
 			boolean horiz = false;
 			int row = -1, column = -1; // initialised at -1 to make sure the random setting is working
@@ -84,11 +84,9 @@ public class OceanImpl implements Ocean {
 				row = randInt(0, maxGrid);
 				column = randInt(0, maxGrid);
 				horiz = (randInt(0,2)>0)? true:false;
-				place = obj.okToPlaceShipAt(row, column, horiz, this); //Can Ocean class refer to itself with the keyword this????
+				place = obj.okToPlaceShipAt(row, column, horiz, this); //TODO Can Ocean class refer to itself with the keyword this????
 			}
-			obj.setHorizontal(horiz);
-			obj.setBowColumn(column);
-			obj.setBowRow(row);
+			obj.placeShipAt(row, column, horiz, this);
 		}	
 	}
 	
@@ -104,6 +102,7 @@ public class OceanImpl implements Ocean {
 		shotFired++;
 		if(oceanGrid[row][column]=="S"){
 			hitCount++;
+			//TODO need to check if ship is sunk, if yes then remove it from the list and call GameOver method
 			
 			return true;
 		}else{
@@ -138,6 +137,8 @@ public class OceanImpl implements Ocean {
 	
 	@Override
 	public String toString(){
+		//TODO finalise the toString
+		
 		//return the string representing the ocean
 		// row number on the left from 0 to 9
 		// column number on the top from 0 to 9
@@ -161,7 +162,24 @@ public class OceanImpl implements Ocean {
 		Ship es = new EmptySea();
 		for(int i = 0; i<maxGrid-1;i++){
 			for (int j=0;j<maxGrid-1;j++)
-				this.shipArray[i][j]= es;
+				setShipArray(es, i, j);
 		}
+	}
+	
+	public void setShipArray(Ship ship, int row, int column){
+		this.shipArray[row][column]= ship;
+	}
+	
+	private Ship identifyShip(int row, int column){
+		Ship s;
+		boolean check = false;
+		Iterator<Ship> it = fleet.iterator();
+		while (it.hasNext()){
+			Ship obj = it.next(); 
+			
+			s = obj;
+		}	
+		return s;
+		
 	}
 }
