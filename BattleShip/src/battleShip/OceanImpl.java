@@ -15,17 +15,17 @@ public class OceanImpl implements Ocean {
 	private int shotFired;
 	private int hitCount;
 	private int shipSunk;
-	private String ocean;
-	private String[][] oceanGrid;
+	//private String ocean;
+	//private String[][] oceanGrid;
 	private List<Ship> fleet;
-	private int maxGrid;
 	private int fleetInitSize;
+	private int maxGrid;
 
 	public OceanImpl(){
 		//Create an empty ocean fills the ship  array with EmptySeas.
 		// Also initialises game variables such as how many shots have been fired.
 		maxGrid = 10;
-		this.initOcean();
+		//this.initOcean();
 		this.initShipArray();
 		fleet = new ArrayList<Ship>();
 		this.admiral();
@@ -37,7 +37,9 @@ public class OceanImpl implements Ocean {
 	
 	private void admiral(){
 		//Setting the fleet
-		//TODO **************** TO be set as FACTORY ******************************
+		//TODO ******** To set as FACTORY ******************************
+		//TODO ************ WARNING ********* IF THE LIST BECOME OBSOLETE **** CHECK placeAllShipsRandomly METHOD TO MODIFY ACCORDINGLY
+		//TODO ************ WARNING ********* IF THE LIST BECOME OBSOLETE **** CHECK isGameOver METHOD TO MODIFY ACCORDINGLY
 		Ship carrier = new AircraftCarrier();
 		fleet.add(carrier);
 		Ship battleship1 = new Battleship();
@@ -87,12 +89,22 @@ public class OceanImpl implements Ocean {
 				place = obj.okToPlaceShipAt(row, column, horiz, this); //TODO Can Ocean class refer to itself with the keyword this????
 			}
 			obj.placeShipAt(row, column, horiz, this);
+			//TODO check if below setShipArray for the bow is done in Ship Class
+			for (int i = 0;i<obj.getLength();i++){
+				if(horiz){
+					setShipArray(obj, row, column+i);
+				}else{
+					setShipArray(obj, row+i, column);
+				}
+			}
 		}	
 	}
 	
 	public boolean isOccupied(int row, int column){
 		//returns True if the given location contains a ship, false if not
-		return(oceanGrid[row][column]=="S" || oceanGrid[row][column]=="x")?true:false;
+		Ship es = new EmptySea();
+		return(shipArray[row][column].equals(es))?false:true;
+		//return(oceanGrid[row][column]=="S" || oceanGrid[row][column]=="x")?true:false;
 	}
 	
 	public boolean shootAt(int row, int column){
@@ -100,13 +112,18 @@ public class OceanImpl implements Ocean {
 		//returns True if several shot fired at the same location as long as the ship is afloat, false otherwise
 		//update the number of shot fired
 		shotFired++;
-		if(oceanGrid[row][column]=="S"){
-			hitCount++;
-			//TODO need to check if ship is sunk, if yes then remove it from the list and call GameOver method
-			
-			return true;
-		}else{
+		Ship s = shipArray[row][column];
+		Ship es = new EmptySea();
+		if(s.getClass().equals((es.getClass()))){
+			s.shootAt(row, column);
 			return false;
+		}else{
+			hitCount++;
+			s.shootAt(row, column);
+			if(s.isSunk()){
+				fleet.remove(s);
+			}
+			return true;
 		}
 	}
 	
@@ -138,7 +155,7 @@ public class OceanImpl implements Ocean {
 	@Override
 	public String toString(){
 		//TODO finalise the toString
-		
+		String ocean = "";
 		//return the string representing the ocean
 		// row number on the left from 0 to 9
 		// column number on the top from 0 to 9
@@ -150,13 +167,13 @@ public class OceanImpl implements Ocean {
 		return ocean;
 	}
 	
-	private void initOcean(){
+	/*private void initOcean(){
 		oceanGrid = new String[maxGrid][maxGrid];
 		for(int i = 0; i<maxGrid-1;i++){
 			for (int j=0;j<maxGrid-1;j++)
 				oceanGrid[i][j]=".";
 		}
-	}
+	}*/
 	
 	private void initShipArray(){
 		Ship es = new EmptySea();
@@ -170,7 +187,8 @@ public class OceanImpl implements Ocean {
 		this.shipArray[row][column]= ship;
 	}
 	
-	private Ship identifyShip(int row, int column){
+	public Ship identifyShip(int row, int column){
+		//TODO Check if it used, if not to be deleted from Interface also !!!!!!!!
 		Iterator<Ship> it = fleet.iterator();
 		while (it.hasNext()){
 			Ship obj = it.next(); 
@@ -186,7 +204,7 @@ public class OceanImpl implements Ocean {
 				}
 			}
 		}
-		Ship es= new EmptySea();
+		Ship es= new EmptySea(); //TODO replace new Emptysea by the actual Emptysea from that location
 		return es;
 	}
 }

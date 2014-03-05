@@ -61,4 +61,9 @@ public interface Ocean {
 	*/
 	@Override
 	 String toString();
+	
+	/*
+	 * @return returns Ship that is located in these row/column coordinate 
+	 */
+	Ship identifyShip(int row, int column);
 }
